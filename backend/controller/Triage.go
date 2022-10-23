@@ -56,7 +56,7 @@ func CreateTriages(c *gin.Context) {
 		//User_ID: triage.User_ID,               // โยงความสัมพันธ์กับ Entity User
 	}
 
-	// 15: บันทึก
+	// 15: บันทึก Triage
 	if err := entity.DB().Create(&mb).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
