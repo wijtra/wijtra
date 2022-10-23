@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Users from "./components/test";
-import SimplePaper from "./components/TrigesPage";
+import SimplePaper from "./components/TriagesPage";
 //import Navbar from "./components/Navbar";
 
 export default function App() {

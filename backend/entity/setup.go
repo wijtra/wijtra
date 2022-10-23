@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"fmt"
+	//"fmt"
 
 	"gorm.io/gorm"
 
@@ -31,45 +31,46 @@ func SetupDatabase() {
 	database.AutoMigrate(
 		&UserType{},
 		&User{},
+		&Patient{},
 		&DiseaseType{},
 		&Disease{},
 		&InpantientDepartment{},
-		&Patient{},
+		&Triage_State{},
 		&Triage{},
 	)
 
 	db = database
 
-	// -- UserType DATA --
-	UserType1 := UserType{
-		UserType: "หมอ",
-	}
-	db.Model(&UserType{}).Create(&UserType1)
+	// // -- UserType DATA --
+	// UserType1 := UserType{
+	// 	UserType: "หมอ",
+	// }
+	// db.Model(&UserType{}).Create(&UserType1)
 
-	UserType2 := UserType{
-		UserType: "พยาบาล",
-	}
-	db.Model(&UserType{}).Create(&UserType2)
+	// UserType2 := UserType{
+	// 	UserType: "พยาบาล",
+	// }
+	// db.Model(&UserType{}).Create(&UserType2)
 
-	// --USER DATA--
+	// // --USER DATA--
 
-	db.Model(&User{}).Create(&User{
-		User_NAME:     "Wijitra",
-		User_PASSWORD: "1234",
-		ISNAME:        "นางสาววิจิตรา  แซ่เอีย",
-		UserType:      UserType2,
-	})
-	db.Model(&User{}).Create(&User{
-		User_NAME:     "Name",
-		User_PASSWORD: "5678",
-		ISNAME:        "นายชัยชนะ  สุขดี",
-		UserType:      UserType2,
-	})
+	// db.Model(&User{}).Create(&User{
+	// 	User_NAME:     "Wijitra",
+	// 	User_PASSWORD: "1234",
+	// 	ISNAME:        "นางสาววิจิตรา  แซ่เอีย",
+	// 	UserType:      UserType2,
+	// })
+	// db.Model(&User{}).Create(&User{
+	// 	User_NAME:     "Name",
+	// 	User_PASSWORD: "5678",
+	// 	ISNAME:        "นายชัยชนะ  สุขดี",
+	// 	UserType:      UserType2,
+	// })
 
-	var Wijitra User
-	var Name User
-	db.Raw("SELECT * FROM users WHERE User_NAME = ? ", "Wijitra").Scan(&Wijitra)
-	db.Raw("SELECT * FROM users WHERE User_NAME = ? ", "Name").Scan(&Name)
+	// var Wijitra User
+	// var Name User
+	// db.Raw("SELECT * FROM users WHERE User_NAME = ? ", "Wijitra").Scan(&Wijitra)
+	// db.Raw("SELECT * FROM users WHERE User_NAME = ? ", "Name").Scan(&Name)
 
 	// -- DiseaseType DATA --
 	DiseaseType1 := DiseaseType{
@@ -166,80 +167,80 @@ func SetupDatabase() {
 	}
 	db.Model(&InpantientDepartment{}).Create(&IPD1008)
 
-	//  -- Patient DATA --
-	db.Model(&Patient{}).Create(&Patient{
-		Patient_NAME: "นางสมหญิง ดีเด่น",
-		Gender:       "1",
-	})
+	// //  -- Patient DATA --
+	// db.Model(&Patient{}).Create(&Patient{
+	// 	Patient_NAME: "นางสมหญิง ดีเด่น",
+	// 	Gender:       "1",
+	// })
 
-	db.Model(&Patient{}).Create(&Patient{
-		Patient_NAME: "นายสมชาย เด่นดี",
-		Gender:       "2",
-	})
+	// db.Model(&Patient{}).Create(&Patient{
+	// 	Patient_NAME: "นายสมชาย เด่นดี",
+	// 	Gender:       "2",
+	// })
 
-	db.Model(&Patient{}).Create(&Patient{
-		Patient_NAME: "เด็กชายสมหวัง จริงจริง",
-		Gender:       "1",
-	})
+	// db.Model(&Patient{}).Create(&Patient{
+	// 	Patient_NAME: "เด็กชายสมหวัง จริงจริง",
+	// 	Gender:       "1",
+	// })
 
-	var Patient1 Patient
-	var Patient2 Patient
-	var Patient3 Patient
-	db.Raw("SELECT * FROM patients WHERE Patient_NAME = ? ", "นางสมหญิง ดีเด่น").Scan(&Patient1)
-	db.Raw("SELECT * FROM patients WHERE Patient_NAME = ? ", "นายสมชาย เด่นดี").Scan(&Patient2)
-	db.Raw("SELECT * FROM patients WHERE Patient_NAME = ? ", "เด็กชายสมหวัง จริงจริง").Scan(&Patient3)
+	// var Patient1 Patient
+	// var Patient2 Patient
+	// var Patient3 Patient
+	// db.Raw("SELECT * FROM patients WHERE Patient_NAME = ? ", "นางสมหญิง ดีเด่น").Scan(&Patient1)
+	// db.Raw("SELECT * FROM patients WHERE Patient_NAME = ? ", "นายสมชาย เด่นดี").Scan(&Patient2)
+	// db.Raw("SELECT * FROM patients WHERE Patient_NAME = ? ", "เด็กชายสมหวัง จริงจริง").Scan(&Patient3)
 
-	// -- Triage DATA --
+	// // -- Triage DATA --
 
-	db.Model(&Triage{}).Create(&Triage{
-		Patient:              Patient1,
-		Disease:              Disease1117,
-		InpantientDepartment: IPD1001,
-		User:                 Wijitra,
-		Triage_COMMENT:       "-",
-	})
+	// db.Model(&Triage{}).Create(&Triage{
+	// 	Patient:              Patient1,
+	// 	Disease:              Disease1117,
+	// 	InpantientDepartment: IPD1001,
+	// 	User:                 Wijitra,
+	// 	Triage_COMMENT:       "-",
+	// })
 
-	db.Model(&Triage{}).Create(&Triage{
-		Patient:              Patient2,
-		Disease:              Disease1114,
-		InpantientDepartment: IPD1002,
-		User:                 Name,
-		Triage_COMMENT:       "ความดันสูง",
-	})
+	// db.Model(&Triage{}).Create(&Triage{
+	// 	Patient:              Patient2,
+	// 	Disease:              Disease1114,
+	// 	InpantientDepartment: IPD1002,
+	// 	User:                 Name,
+	// 	Triage_COMMENT:       "ความดันสูง",
+	// })
 
-	db.Model(&Triage{}).Create(&Triage{
-		Patient:              Patient3,
-		Disease:              Disease1112,
-		InpantientDepartment: IPD1008,
-		User:                 Wijitra,
-		Triage_COMMENT:       "หอบหืด",
-	})
+	// db.Model(&Triage{}).Create(&Triage{
+	// 	Patient:              Patient3,
+	// 	Disease:              Disease1112,
+	// 	InpantientDepartment: IPD1008,
+	// 	User:                 Wijitra,
+	// 	Triage_COMMENT:       "หอบหืด",
+	// })
 
-	//--Query--
+	// //--Query--
 
-	// var target User
-	// db.Model(&User{}).Find(&target, db.Where("User_Name = ?", "Wijitra"))
+	// // var target User
+	// // db.Model(&User{}).Find(&target, db.Where("User_Name = ?", "Wijitra"))
 
-	var PatientList Patient
-	db.Model(&Patient{}).Find(&PatientList, db.Where("Patient_NAME = ? ", "นางสมหญิง ดีเด่น"))
+	// var PatientList Patient
+	// db.Model(&Patient{}).Find(&PatientList, db.Where("Patient_NAME = ? ", "นางสมหญิง ดีเด่น"))
 
-	// var
-	var TriageList []*Triage
-	db.Model(&Triage{}).
-		Joins("Patient").
-		Joins("Disease").
-		Joins("InpantientDepartment").
-		Joins("User").
-		Find(&TriageList, db.Where("Patient_NAME = ?", "นางสมหญิง ดีเด่น"))
+	// // var
+	// var TriageList []*Triage
+	// db.Model(&Triage{}).
+	// 	Joins("Patient").
+	// 	Joins("Disease").
+	// 	Joins("InpantientDepartment").
+	// 	Joins("User").
+	// 	Find(&TriageList, db.Where("Patient_NAME = ?", "นางสมหญิง ดีเด่น"))
 
-	for _, tl := range TriageList {
-		fmt.Printf("Trige : %v\n", tl.ID)
-		fmt.Printf("Patient : %v\n", tl.Patient.Patient_NAME)
-		fmt.Printf("Disease: %v\n", tl.Disease.Disease_NAME)
-		//fmt.Printf("DiseaseType: %v\n", tl.Disease.DiseaseType)
-		fmt.Printf("InpantientDepartment: %v\n", tl.InpantientDepartment.InpantientDepartment_NAME)
-		fmt.Printf("User: %v\n", tl.User.User_NAME)
-		fmt.Println("====")
-	}
+	// for _, tl := range TriageList {
+	// 	fmt.Printf("Trige : %v\n", tl.ID)
+	// 	fmt.Printf("Patient : %v\n", tl.Patient.Patient_NAME)
+	// 	fmt.Printf("Disease: %v\n", tl.Disease.Disease_NAME)
+	// 	//fmt.Printf("DiseaseType: %v\n", tl.Disease.DiseaseType)
+	// 	fmt.Printf("InpantientDepartment: %v\n", tl.InpantientDepartment.InpantientDepartment_NAME)
+	// 	fmt.Printf("User: %v\n", tl.User.User_NAME)
+	// 	fmt.Println("====")
+	// }
 
 }

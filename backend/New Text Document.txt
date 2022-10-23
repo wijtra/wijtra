@@ -1,0 +1,380 @@
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import {
+  AppBar,
+  Button,
+  FormControl,
+  IconButton,
+  Paper,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import { DiseaseInterface } from "../models/Disease";
+import { InpantientDepartmentInterface } from "../models/InpantientDepartment";
+import { DiseaseTypeInterface } from "../models/DiseaseType";
+import { UserTypeInterface } from "../models/UserType";
+import { PatientInterface } from "../models/Patient";
+import { TriagesInterface } from "../models/Triages";
+//import { UserInterface } from "../models/User";
+
+export default function SimpleContainer() {
+ // const [users, setUsers] = React.useState<UserTypeInterface[]>([]);
+  const [patients, setPatients] = React.useState<PatientInterface[]>([]);
+  const [triages, setTriages] = React.useState<Partial<TriagesInterface>>({});
+
+
+  const getPatient = async () => {
+    const apiUrl = "http://localhost:8080/patients";
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setPatients(res.data);
+        }
+      });
+  };
+
+  // const getUser = async () => {
+  //   const apiUrl = "http://localhost:8080/ListUserTypes";
+  //   const requestOptions = {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   };
+  //   fetch(apiUrl, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data) {
+  //         setPatients(res.data);
+  //       }
+  //     });
+  // };
+
+  const [diseasetypes, setDiseaseTypes] = useState<DiseaseTypeInterface[]>([]);
+  //console.log(diseasetypeID)
+  const getDiseaseType = async () => {
+    const apiUrl = "http://localhost:8080/diseasetypes";
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setDiseaseTypes(res.data);
+        }
+      });
+  };
+
+  const [diseases, setDiseases] = React.useState<DiseaseInterface[]>([]);
+  const getDisease = async () => {
+      const apiUrl = "http://localhost:8080/diseases";
+      const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
+      fetch(apiUrl, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res.data);
+          if (res.data) {
+            setDiseases(res.data);
+          }
+        });
+    };
+
+  const [inpantientdepartments, setInpantientDepartments] = React.useState<InpantientDepartmentInterface[]>([]);
+  const getInpantientDepartment = async () => {
+    const apiUrl = "http://localhost:8080/inpantientdepartment";
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setInpantientDepartments(res.data);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getPatient();
+    getInpantientDepartment();
+  //getUser();
+  }, []);
+
+  useEffect(() => {
+    getDisease();
+  }, [diseasetypes])
+
+
+ // -------------------------------------------------------------------------------------------------
+
+
+  const handleChange_patients = (event: SelectChangeEvent) => {
+      const name = event.target.name as keyof typeof patients;
+      setPatients({
+          ...patients,
+          [name]: event.target.value,
+        });
+        console.log(event.target.value);
+  };
+
+
+  const handleChange_triages = (event: SelectChangeEvent) => {
+      const name = event.target.name as keyof typeof triages;
+      setTriages({
+            ...triages,
+            [name]: event.target.value,
+          });
+          console.log(event.target.value);
+    };
+
+   // -------------------------------------------------------------------------------------------------
+
+//    //function Search
+//    function search() { 
+//     const apiUrl1 = `http://localhost:8080/GetPatient/${patients}`;
+//     const requestOptions1 = {
+//     method: "GET",
+//     headers: { "Content-Type": "application/json" },
+//     };
+//     fetch(apiUrl1, requestOptions1)
+//           .then((response) => response.json())
+//           .then((res) => {
+//                 if (res.data) {
+//                       //console.log(res.data);
+//                       setIPD_Name(res.data.InpantientDepartment.InpantientDepartment_NAME);
+//                       setDisease_Name(res.data.Disease.Disease_NAME)
+//                       setDiseaseType(res.data.Disease.DiseaseType.DiseaseType_NAME)
+//                       setGenderType(res.data.Patient.Gender.Gender_Name)
+//                 }
+//           });
+// }
+
+  return (
+    <Paper elevation={0}>
+      <Box>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              SA Hospital
+            </Typography>
+            <Button color="inherit">Logout</Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+
+      <Container maxWidth="md">
+        <Paper elevation={0}>
+          <Box
+            display={"flex"}
+            sx={{
+              marginTop: 2,
+              marginX: 2,
+            }}
+          >
+            <h2>ระบบคัดแยกผู้ป่วย</h2>
+          </Box>
+          <hr />
+          
+          <Grid container spacing={2} sx={{ padding: 2 }}>
+            <Grid item xs={10}>
+              <p>เลือกผู้ป่วย</p>
+              <FormControl fullWidth >
+                  <Select
+                  id="Patient_Name"
+                  value={String(triages.Patient_ID)}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  onChange={handleChange_patients}
+                  >
+                     <MenuItem value="">
+                        กรุณาเลือกผู้ป่วย
+                    </MenuItem>
+                    {patients.map( patient => (
+                           <MenuItem value={patient.ID} key = {patient.ID}>
+                                {patient.Patient_NAME}
+                           </MenuItem>
+                        ))}
+                    </Select>
+                 </FormControl>  
+                                                            
+              </Grid>
+              <Grid item xs={2} >
+                                          
+                  <Button
+                        onClick={search}
+                        variant="contained"
+                        color="primary"
+                        sx={{marginTop : 8}}
+                    >
+                        ค้นหา
+                    </Button>
+                                    
+              </Grid>
+              {/* <FormControl fullWidth variant="outlined">
+                <Select
+                  native
+                  value={String(triages.Patient_ID)}
+                  onChange={handleChange_triages}
+                  inputProps={{
+                    name: "Patient_ID",
+                  }}
+                >
+                  <option aria-label="None" value="">
+                    กรุณาเลือกผู้ป่วย
+                  </option>
+                  {patients.map((item: PatientInterface) => (
+                    <option value={item.ID} key={item.ID}>
+                      {item.ID}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+
+            </Grid> */}
+            <Grid item xs={6}>
+              <p>ชื่อ-สกุล</p>
+              <TextField
+                fullWidth
+                id="outlined-read-only-input"
+                defaultValue = "None"
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>เพศ</p>
+              <TextField
+                fullWidth
+                id="outlined-read-only-input"
+                defaultValue="None"
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>โรค</p>
+      
+              <FormControl fullWidth variant="outlined">
+                <Select
+                  native
+                  value={String(triages.Disease_ID)}
+                  onChange={handleChange_triages}
+                  inputProps={{
+                    name: "Disease_ID",
+                  }}
+                >
+                  <option aria-label="None" value="">
+                    กรุณาเลือกโรค
+                  </option>
+                  {diseases.map((item: DiseaseInterface) => (
+                    <option value={item.ID} key={item.ID}>
+                      {item.Disease_NAME}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <p>แผนก</p>
+              <FormControl fullWidth variant="outlined">
+                <Select
+                  native
+                  value={String(triages.InpantientDepartment_ID)}
+                  onChange={handleChange_triages}
+                  inputProps={{
+                    name: "InpantientDepartment_ID",
+                  }}
+                >
+                  <option aria-label="None" value="">
+                    กรุณาเลือกแผนก
+                  </option>
+                  {inpantientdepartments.map((item: InpantientDepartmentInterface) => (
+                    <option value={item.ID} key={item.ID}>
+                      {item.InpantientDepartment_NAME}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <p>เพิ่มเติม</p>
+              <TextField
+                id="outlined-multiline-static"
+                fullWidth
+                multiline
+                rows={4}
+                defaultValue=""
+              />
+            </Grid>
+            {/* <Grid item xs={12}>
+              <p>ผู้บันทึก</p>
+              <FormControl fullWidth>
+                <Select
+                  id="demo-select-small"
+                  value={""}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {diseasetypes.map((diseasetype) => (
+                    <MenuItem value={diseasetype.ID} key={diseasetype.ID}>
+                      {diseasetype.DiseaseType_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid> */}
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
+              <Button
+                fullWidth
+                size="large"
+                color="success"
+                variant="contained"
+                sx={{ marginTop: 2 }}
+              >
+                บันทึก
+              </Button>
+            </Grid>
+            <Grid item xs={4}></Grid>
+          </Grid>
+        </Paper>
+      </Container>
+
+      <Container></Container>
+    </Paper>
+  );
+}

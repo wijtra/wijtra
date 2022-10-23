@@ -1,5 +1,5 @@
 export interface InpantientDepartmentInterface {
     ID: number,
-    InpantientDepartment_name : string
+    InpantientDepartment_NAME : string
 
   }

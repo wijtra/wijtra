@@ -71,7 +71,7 @@ func ListDisease(c *gin.Context) {
 
 	var diseases []entity.Disease
 
-	if err := entity.DB().Raw("SELECT * FROM disease").Scan(&diseases).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM diseases").Find(&diseases).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
@@ -81,25 +81,4 @@ func ListDisease(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": diseases})
 
-}
-
-// PATCH /Diseases
-func UpdateDisease(c *gin.Context) {
-	var disease entity.Disease
-	if err := c.ShouldBindJSON(&disease); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	if tx := entity.DB().Where("id = ?", disease.ID).First(&disease); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bed not found"})
-		return
-	}
-
-	if err := entity.DB().Save(&disease).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": disease})
 }

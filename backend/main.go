@@ -18,12 +18,16 @@ func main() {
 
 	// User Routes
 
-	r.GET("/users", controller.ListUsers)
+	// r.GET("/users", controller.ListUsers)
 
-	r.GET("/user/:id", controller.GetUser)
+	// r.GET("/user/:id", controller.GetUser)
 
-	r.POST("/users", controller.CreateUser)
+	// r.POST("/users", controller.CreateUser)
 
+	r.GET("/diseasetypes", controller.ListDiseaseTypes)
+	r.GET("/diseases", controller.ListDisease)
+	r.GET("/patients", controller.GetListPatients)
+	r.GET("/inpantientdepartment", controller.GetListInpantientDepartments)
 	// Run the server
 
 	r.Run()
