@@ -135,20 +135,6 @@ function TriagePageCreate() {
       
 //=======================================================================================================================================
 //function fethch data จาก backend
-      const getTriagePage = async () => {
-            const apiUrl = "http://localhost:3000/GetListTriages";
-            const requestOptions = {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            };
-            fetch(apiUrl, requestOptions)
-                  .then((response) => response.json())
-                  .then((res) => {
-                        if (res.data) {
-                             // setFilterpatients(res.data)
-                        }
-                  });
-      };
 
       const getPatients = async () => {
             const apiUrl = "http://localhost:3000/patients";
@@ -166,6 +152,21 @@ function TriagePageCreate() {
                   });
       };
 
+      const getDiseaseTypes = async () => {
+            const apiUrl = "http://localhost:3000/diseasetypes";
+            const requestOptions = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            };
+            fetch(apiUrl, requestOptions)
+                  .then((response) => response.json())
+                  .then((res) => {
+                        console.log(res.data);
+                        if (res.data) {
+                              setDiseaseTypes(res.data)
+                        }
+                  });
+      };
       const getDisease = async () => {
             const apiUrl = "http://localhost:3000/diseases";
             const requestOptions = {
@@ -202,7 +203,7 @@ function TriagePageCreate() {
             getPatients();
             getDisease();
             getInpantientDepartment();
-            getTriagePage();
+            getDiseaseTypes();
       }, []);
 
    
