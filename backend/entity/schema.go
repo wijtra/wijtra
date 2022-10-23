@@ -4,23 +4,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserType struct {
-	gorm.Model
-
-	UserType string
-
-	// 1 User_Type เป็นเจ้าของได้หลาย Users
-	Users []User `gorm:"foreignKey:UserType_ID"`
-}
-
 type User struct {
 	gorm.Model
-	User_NAME     string `grom:"uniqueIndex"`
+	User_NAME     string
 	User_PASSWORD string
-	ISNAME        string
-	// User_Type_ID  ทำหน้าที่เป็น FK
-	UserTypeID *uint
-	UserType   UserType
+	User_EMAIL    string `grom:"uniqueIndex"`
 	//1user เป็นเจ้าของได้หลาย Triage
 	Triages []Triage `grom:"foreignKey:User_ID"`
 }

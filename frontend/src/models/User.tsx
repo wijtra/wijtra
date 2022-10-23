@@ -3,7 +3,7 @@ export interface UserInterface {
     ID: number,
 	User_NAME:     string
 	User_PASSWORD: string
-	ISNAME:        string
+	ISNAME: 	   string
 	UserType_ID: Number
 	UserType:    UserTypeInterface
   }

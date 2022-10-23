@@ -54,6 +54,7 @@ function TriagePageCreate() {
       const [success, setSuccess] = useState(false);
       const [error, setError] = useState(false);
 
+
       
 //=======================================================================================================================================
 //สร้างฟังก์ชันสำหรับ คอยรับการกระทำ เมื่อคลิ๊ก หรือ เลือก
@@ -115,7 +116,7 @@ function TriagePageCreate() {
 //=======================================================================================================================================
 //function Search
       function search() { 
-            const apiUrl1 = `http://localhost:8080/GetTriage/${patientID}`;
+            const apiUrl1 = `http://localhost:3000/GetTriage/${patientID}`;
             const requestOptions1 = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -135,7 +136,7 @@ function TriagePageCreate() {
 //=======================================================================================================================================
 //function fethch data จาก backend
       const getTriagePage = async () => {
-            const apiUrl = "http://localhost:8080/GetListTriages";
+            const apiUrl = "http://localhost:3000/GetListTriages";
             const requestOptions = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -150,7 +151,7 @@ function TriagePageCreate() {
       };
 
       const getPatients = async () => {
-            const apiUrl = "http://localhost:8080/GetListPatients";
+            const apiUrl = "http://localhost:3000/patients";
             const requestOptions = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -158,6 +159,7 @@ function TriagePageCreate() {
             fetch(apiUrl, requestOptions)
                   .then((response) => response.json())
                   .then((res) => {
+                        console.log(res.data);
                         if (res.data) {
                               setPatient(res.data)
                         }
@@ -165,7 +167,7 @@ function TriagePageCreate() {
       };
 
       const getDisease = async () => {
-            const apiUrl = "http://localhost:8080/GetListDiseases";
+            const apiUrl = "http://localhost:3000/diseases";
             const requestOptions = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -173,6 +175,7 @@ function TriagePageCreate() {
             fetch(apiUrl, requestOptions)
                   .then((response) => response.json())
                   .then((res) => {
+                        console.log(res.data);
                         if (res.data) {
                               setDiseases(res.data);
                         }
@@ -180,7 +183,7 @@ function TriagePageCreate() {
       };
 
       const getInpantientDepartment = async () => {
-            const apiUrl = "http://localhost:8080/GetListInpantientDepartments";
+            const apiUrl = "http://localhost:3000/GetListInpantientDepartments";
             const requestOptions = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -261,7 +264,7 @@ function TriagePageCreate() {
                                           <p>ชื่อผู้ป่วย</p>
                                           <FormControl fullWidth >
                                                 <Select
-                                                id="Patient_Name"
+            
                                                 value={patientID}
                                                 displayEmpty
                                                 inputProps={{ 'aria-label': 'Without label' }}
@@ -317,24 +320,28 @@ function TriagePageCreate() {
                                     </Grid>
                     
                                     <Grid item xs={4}>
-                                          <p>โรค</p>
-                                          <FormControl fullWidth>
-                                                <Select
-                                                id="demo-select-small"
-                                                value={diseaseID}
-                                                displayEmpty
-                                                inputProps={{ 'aria-label': 'Without label' }}
-                                                onChange={onChangeDisease}
-                                                >
-                                                      <MenuItem value="">
-                                                            กรุณาเลือกโรค
-                                                      </MenuItem>
-                                                      {Diseases.map( diseases => (
-                                                            <MenuItem value={diseases.ID} key = {diseases.ID}>{diseases.Disease_NAME}</MenuItem>
-                                                      ))}
-                                                </Select>
-                                          </FormControl>
-                                    </Grid>
+                                    <p>โรค</p>
+      
+      <FormControl fullWidth variant="outlined">
+        <Select
+          native
+          value={String(Diseases)}
+          onChange={onChangeDisease}
+          inputProps={{
+            name: "Disease_ID",
+          }}
+        >
+          <option aria-label="None" value="">
+            กรุณาเลือกโรค
+                  </option>
+                  {Diseases.map((item: DiseaseInterface) => (
+                    <option value={item.ID} key={item.ID}>
+                      {item.Disease_NAME}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
                                     <Grid item xs={4}>
                                           <p>แผนก</p>
                                           <FormControl fullWidth>
