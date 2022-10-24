@@ -34,7 +34,6 @@ func SetupDatabase() {
 		&DiseaseType{},
 		&Disease{},
 		&InpantientDepartment{},
-		&Triage_State{},
 		&Triage{},
 	)
 

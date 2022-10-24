@@ -394,5 +394,3 @@ function TriagePageCreate() {
       );
 }
 export default TriagePageCreate;
-
-

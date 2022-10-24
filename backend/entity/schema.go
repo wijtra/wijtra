@@ -56,12 +56,6 @@ type InpantientDepartment struct {
 	Triages                   []Triage `grom:"foreignKey: InpantientDepartment_ID"`
 }
 
-type Triage_State struct {
-	gorm.Model
-	Triage_State string
-	Triages      []Triage `grom:"foreignKey: Triage_State_ID"`
-}
-
 type Triage struct {
 	gorm.Model
 	Patient_ID              *uint
@@ -70,8 +64,7 @@ type Triage struct {
 	Disease                 Disease
 	InpantientDepartment_ID *uint
 	InpantientDepartment    InpantientDepartment
-	Triage_State_ID         *uint
-	Triage_State            Triage_State
+	Triage_State            string
 	Triage_COMMENT          string
 	User_ID                 *uint
 	User                    User
