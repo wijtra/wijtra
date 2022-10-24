@@ -165,7 +165,7 @@ func SetupDatabase() {
 	}
 	db.Model(&InpantientDepartment{}).Create(&IPD1008)
 
-	// //  -- Patient DATA --
+	// //  -- Patient DATA.. --
 	// db.Model(&Patient{}).Create(&Patient{
 	// 	Patient_NAME: "นางสมหญิง ดีเด่น",
 	// 	Gender:       "1",
